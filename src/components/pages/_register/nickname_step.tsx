@@ -58,7 +58,7 @@ export default function NicknameStep({ nickname, setNickname, onNext }: {
         disabled={!isValid}
         onClick={onNext}
       >
-        확인
+        다음
       </Button>
     </div>
   );
