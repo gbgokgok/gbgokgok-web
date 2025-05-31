@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "경북곡곡",
   description: "Gyeongbuk Trip Adviser",
+  icons: {
+    icon: '/image/logo.png',
+  }
 };
 
 export default function RootLayout({
