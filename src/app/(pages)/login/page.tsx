@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function login() {
   return (
@@ -16,26 +17,28 @@ export default function login() {
       </div>
       <div className="w-full max-w-[90%] md:max-w-[70%] lg:max-w-[50%] p-4 md:p-6 rounded-lg pb-4">
         <div className="flex flex-col space-y-4 w-full">
-          <button className="bg-gray-100 text-black py-3 px-4 rounded-xl flex items-center justify-center w-full active:bg-yellow-300 transition-colors">
-            <Image
-              src="/icon/kakao-icon.png"
-              alt="kakao icon"
-              width={24}
-              height={24}
-              className="mr-4 p-1"
-            />
-            Kakao로 로그인
-          </button>
-          <button className="bg-gray-100 text-black py-3 px-4 rounded-xl flex items-center justify-center w-full active:bg-blue-300 transition-colors">
-            <Image
-              src="/icon/google-icon.png"
-              alt="google icon"
-              width={24}
-              height={24}
-              className="mr-4 p-1"
-            />
-            Google로 로그인
-          </button>
+            <Link href="/register" passHref>
+                <button className="bg-gray-100 text-black py-3 px-4 rounded-xl flex items-center justify-center w-full active:bg-yellow-300 transition-colors">
+                    <Image
+                    src="/icon/kakao-icon.png"
+                    alt="kakao icon"
+                    width={24}
+                    height={24}
+                    className="mr-4 p-1"
+                    />
+                    Kakao로 로그인
+                </button>
+            </Link>
+            <button className="bg-gray-100 text-black py-3 px-4 rounded-xl flex items-center justify-center w-full active:bg-blue-300 transition-colors">
+                <Image
+                src="/icon/google-icon.png"
+                alt="google icon"
+                width={24}
+                height={24}
+                className="mr-4 p-1"
+                />
+                Google로 로그인
+            </button>
         </div>
       </div>
     </div>
