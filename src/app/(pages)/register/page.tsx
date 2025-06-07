@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export default function register() {
   return (
     <div className="flex flex-col min-h-[80vh] justify-between items-center overflow-hidden" style={{ fontFamily: 'Noto Sans KR, sans-serif' }}>
