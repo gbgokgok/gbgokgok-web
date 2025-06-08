@@ -12,16 +12,18 @@ import {
 } from "@/components/ui/drawer";
 
 
-export default function birth_genderPage({
+export default function BirthGenderPage({
   birthYear,
   setBirthYear,
   gender,
   setGender,
+  onNext,
 }: {
   birthYear: string;
   setBirthYear: (v: string) => void;
   gender: string;
   setGender: (v: string) => void;
+  onNext: () => void;
 }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -245,6 +247,7 @@ export default function birth_genderPage({
           ${isValid ? "bg-green-800 text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
         `}
         disabled={!isValid}
+        onClick={onNext}
       >
         다음
       </Button>
