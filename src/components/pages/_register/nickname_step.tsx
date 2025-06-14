@@ -8,20 +8,14 @@ export default function NicknameStep({ nickname, setNickname, onNext }: {
 }) {
   const value = nickname.trim();
 
-  // 한글만 2자 이상
-  const isKoreanOnly = /^[가-힣]{2,}$/.test(value);
+  // 한글 2-6글자
+  const isKoreanOnly = /^[가-힣]{2,6}$/.test(value);
 
-  // 영어만 3자 이상
-  const isEnglishOnly = /^[a-zA-Z]{3,}$/.test(value);
-
-  // 한글 2자 이상 + 숫자 1개 이상 (영문, 특수문자 X)
-  const isKoreanWithNumber = /^(?=.*[가-힣]{2,})(?=.*[0-9])[가-힣0-9]+$/.test(value);
-
-  // 영어 3자 이상 + 숫자 1개 이상 (한글, 특수문자 X)
-  const isEnglishWithNumber = /^(?=.*[a-zA-Z]{3,})(?=.*[0-9])[a-zA-Z0-9]+$/.test(value);
+  // 영어 2-14글자
+  const isEnglishOnly = /^[a-zA-Z]{2,14}$/.test(value);
 
   // 최종 유효성
-  const isValid = isKoreanOnly || isEnglishOnly || isKoreanWithNumber || isEnglishWithNumber;
+  const isValid = isKoreanOnly || isEnglishOnly;
 
   return (
     <div className="flex flex-col items-center w-full max-w-[400px]">
@@ -49,7 +43,7 @@ export default function NicknameStep({ nickname, setNickname, onNext }: {
         )}
       </div>
       <p className="mt-2 text-sm text-gray-400 w-full text-left">
-        한글 2자, 영문 3자 이상
+        한글 2-6글자, 영어 2-14글자 (한영 혼용 불가)
       </p>
       <Button
         className={`w-full mt-8 py-6 rounded-lg text-base font-semibold transition-colors
