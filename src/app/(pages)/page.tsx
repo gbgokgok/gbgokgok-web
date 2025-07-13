@@ -42,7 +42,7 @@ export default function Home() {
         
         <p className="text-sm text-gray-500 mt-2 flex items-center">
           <span className="mr-1">💬</span>
-          "5분에 따나는 감성 여행", "사람 적은 숨은 명소 3선"
+          &ldquo;5분에 따나는 감성 여행&rdquo;, &ldquo;사람 적은 숨은 명소 3선&rdquo;
         </p>
       </div>
 

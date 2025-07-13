@@ -34,7 +34,6 @@ export async function GET(request: NextRequest) {
     }
 
     const text = await response.text();
-    console.log('백엔드 응답 원문:', text);
     let data;
     try {
       data = JSON.parse(text);

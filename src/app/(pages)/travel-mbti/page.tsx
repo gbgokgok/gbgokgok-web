@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
-import Image from "next/image";
-
 const questions = [
   // E/I
   {
@@ -118,21 +116,6 @@ const results = {
       description: "혼자 도심 핫플을 빠르게 탐색하고 즐기는 유형",
       emoji: "🗺️"
     },
-};
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
 };
 
 export default function TravelMbtiPage() {

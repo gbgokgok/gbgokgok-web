@@ -2,13 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
 
-export default function Login() {
-  const router = useRouter();
+// 에러 처리를 위한 컴포넌트
+function ErrorHandler() {
   const searchParams = useSearchParams();
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -31,9 +30,25 @@ export default function Login() {
     }
   }, [searchParams]);
 
+  if (!error) return null;
+
+  return (
+    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+      <p>{error}</p>
+    </div>
+  );
+}
+
+// 로딩 상태를 위한 폴백 컴포넌트
+function ErrorHandlerFallback() {
+  return null; // 로딩 중에는 아무것도 표시하지 않음
+}
+
+export default function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleGoogleLogin = async () => {
     setIsLoading(true);
-    setError(null);
     try {
       // Google OAuth 클라이언트 ID
       const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
@@ -49,7 +64,6 @@ export default function Login() {
       window.location.href = googleAuthUrl;
     } catch (error) {
       console.error('Google 로그인 오류:', error);
-      setError('로그인 처리 중 오류가 발생했습니다.');
       setIsLoading(false);
     }
   };
@@ -68,11 +82,9 @@ export default function Login() {
         </div>
       </div>
       <div className="w-full max-w-[90%] md:max-w-[70%] lg:max-w-[50%] p-4 md:p-6 rounded-lg pb-4">
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
-            <p>{error}</p>
-          </div>
-        )}
+        <Suspense fallback={<ErrorHandlerFallback />}>
+          <ErrorHandler />
+        </Suspense>
         <div className="flex flex-col space-y-4 w-full">
             <Link href="/register" passHref>
                 <button className="bg-gray-100 text-black py-3 px-4 rounded-xl flex items-center justify-center w-full active:bg-yellow-300 transition-colors">

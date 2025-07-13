@@ -1,14 +1,14 @@
 import { cookies } from 'next/headers';
 
 // 토큰 가져오기
-export const getToken = () => {
-  const cookieStore = cookies();
+export const getToken = async () => {
+  const cookieStore = await cookies();
   return cookieStore.get('accessToken')?.value;
 };
 
 // 로그인 상태 확인
-export const isAuthenticated = () => {
-  return !!getToken();
+export const isAuthenticated = async () => {
+  return !!(await getToken());
 };
 
 // 토큰 저장 (클라이언트 측)
