@@ -42,3 +42,6 @@ next-env.d.ts
 
 # pem
 gbgokgok-dev-key.pem
+
+# claude md
+CLAUDE.md

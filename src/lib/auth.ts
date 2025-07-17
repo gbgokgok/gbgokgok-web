@@ -1,15 +1,6 @@
-import { cookies } from 'next/headers';
+'use client';
 
-// 토큰 가져오기
-export const getToken = async () => {
-  const cookieStore = await cookies();
-  return cookieStore.get('accessToken')?.value;
-};
-
-// 로그인 상태 확인
-export const isAuthenticated = async () => {
-  return !!(await getToken());
-};
+// 클라이언트 측 함수들
 
 // 토큰 저장 (클라이언트 측)
 export const setTokens = (accessToken: string, refreshToken?: string) => {
@@ -32,6 +23,16 @@ export const getCookie = (name: string) => {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop()?.split(';').shift();
   return null;
+};
+
+// 클라이언트 측에서 토큰 가져오기
+export const getClientToken = () => {
+  return getCookie('accessToken');
+};
+
+// 클라이언트 측에서 로그인 상태 확인
+export const isClientAuthenticated = () => {
+  return !!getClientToken();
 };
 
 // 로그인 후 리다이렉션 처리

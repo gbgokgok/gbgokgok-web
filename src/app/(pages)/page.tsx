@@ -73,11 +73,11 @@ export default function Home() {
               </div>
               <div className="text-right">
                 <Image 
-                  src="/image/banner-bg.jpg" 
+                  src="/image/logo_blank.png" 
                   alt="여행지 이미지" 
                   width={120} 
                   height={80} 
-                  className="rounded-lg"
+                  className="rounded-lg w-auto"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
