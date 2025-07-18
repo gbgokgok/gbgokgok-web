@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
+import { isClientAuthenticated } from '@/lib/auth';
 
 // 에러 처리를 위한 컴포넌트
 function ErrorHandler() {
@@ -46,6 +47,14 @@ function ErrorHandlerFallback() {
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  // 로그인 상태 확인 및 리다이렉션
+  useEffect(() => {
+    if (isClientAuthenticated()) {
+      router.push('/');
+    }
+  }, [router]);
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);

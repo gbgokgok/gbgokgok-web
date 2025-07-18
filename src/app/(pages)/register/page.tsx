@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import NicknameStep from "@/components/pages/_register/nickname_step";
 import BirthGenderPage from "@/components/pages/_register/birth_gender";
 import TosStep from "@/components/pages/_register/tos";
-import { setTokens } from "@/lib/auth";
+import { setTokens, isClientAuthenticated } from "@/lib/auth";
 
 // SearchParams를 사용하는 컴포넌트를 분리
 function RegisterContent() {
@@ -20,13 +20,23 @@ function RegisterContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // URL에서 토큰 파라미터 가져오기
+  // URL에서 토큰 파라미터 가져오기 및 인증 상태 확인
   useEffect(() => {
+    // 이미 로그인된 상태라면 메인 페이지로 리다이렉션
+    if (isClientAuthenticated()) {
+      router.push('/');
+      return;
+    }
+
+    // 토큰 파라미터 확인
     const token = searchParams?.get('token');
     if (token) {
       setSignupToken(token);
+    } else {
+      // 토큰이 없으면 로그인 페이지로 리다이렉션
+      router.push('/login');
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const handleSignup = async () => {
     try {
