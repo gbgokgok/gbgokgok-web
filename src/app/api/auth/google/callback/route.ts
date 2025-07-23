@@ -29,38 +29,39 @@ export async function GET(request: NextRequest) {
 
     const data = await loginResponse.json();
     
-    // 토큰 저장을 위한 쿠키 설정
     let redirectUrl;
     if (data.isSignupRequired) {
       // 회원가입이 필요한 경우 회원가입 페이지로 리다이렉트
+      // 토큰을 쿠키에 저장하지 않고 URL 파라미터로만 전달
       redirectUrl = `${url.origin}/register?token=${data.accessToken}`;
+      return NextResponse.redirect(redirectUrl);
     } else {
-      // 이미 회원인 경우 메인 페이지로 리다이렉트
+      // 이미 회원인 경우 메인 페이지로 리다이렉트하고 토큰을 쿠키에 저장
       redirectUrl = `${url.origin}/`;
-    }
-    
-    const responseWithCookies = NextResponse.redirect(redirectUrl);
-    
-    // 토큰을 쿠키에 저장
-    responseWithCookies.cookies.set('accessToken', data.accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24, // 1일
-      path: '/',
-    });
-    
-    if (data.refreshToken) {
-      responseWithCookies.cookies.set('refreshToken', data.refreshToken, {
+      
+      const responseWithCookies = NextResponse.redirect(redirectUrl);
+      
+      // 토큰을 쿠키에 저장
+      responseWithCookies.cookies.set('accessToken', data.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 30, // 30일
+        maxAge: 60 * 60 * 24, // 1일
         path: '/',
       });
+      
+      if (data.refreshToken) {
+        responseWithCookies.cookies.set('refreshToken', data.refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 60 * 60 * 24 * 30, // 30일
+          path: '/',
+        });
+      }
+      
+      return responseWithCookies;
     }
-    
-    return responseWithCookies;
   } catch (error) {
     console.error('Google OAuth 콜백 처리 오류:', error);
     const url = new URL(request.url);
