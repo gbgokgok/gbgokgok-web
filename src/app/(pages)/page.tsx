@@ -4,11 +4,12 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, Bell, Globe, Cloud, Car, Users, Star, ChevronRight, Home as HomeIcon, User } from "lucide-react";
+import { Search, Menu, Bell, Globe, Cloud, Car, Users, Star, ChevronRight } from "lucide-react";
+import { TabBar } from "@/components/ui/tab-bar";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-20">
       {/* 상단 헤더 */}
       <header className="bg-white shadow-sm px-4 py-3 flex items-center justify-between">
         <Menu className="w-6 h-6 text-gray-600" />
@@ -286,23 +287,8 @@ export default function Home() {
         </Card>
       </div>
 
-      {/* 하단 탭바 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around">
-          <button className="flex flex-col items-center py-2">
-            <HomeIcon className="w-6 h-6 text-blue-600" />
-            <span className="text-xs text-blue-600 mt-1">홈</span>
-          </button>
-          <button className="flex flex-col items-center py-2">
-            <Search className="w-6 h-6 text-gray-400" />
-            <span className="text-xs text-gray-400 mt-1">검색</span>
-          </button>
-          <button className="flex flex-col items-center py-2">
-            <User className="w-6 h-6 text-gray-400" />
-            <span className="text-xs text-gray-400 mt-1">마이</span>
-          </button>
-        </div>
-      </div>
+      {/* 탭바 추가 */}
+      <TabBar />
     </div>
   );
 }
