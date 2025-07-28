@@ -18,7 +18,7 @@ export default function MiniMap({
   navigateTo = '/course/map',
 }: MiniMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<any>(null);
+  const mapInstance = useRef<KakaoMap | null>(null);
   const router = useRouter();
 
   // 경상북도청 좌표
@@ -40,7 +40,7 @@ export default function MiniMap({
       mapInstance.current = map;
 
       // 마커 추가
-      const marker = new window.kakao.maps.Marker({
+      new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(gyeongbukCoords.lat, gyeongbukCoords.lng),
         map: map
       });
@@ -56,7 +56,7 @@ export default function MiniMap({
     if (window.kakao && window.kakao.maps) {
       initMap();
     }
-  }, [navigateTo, router]);
+  }, [navigateTo, router, gyeongbukCoords.lat, gyeongbukCoords.lng]);
 
   return (
     <>
@@ -66,7 +66,7 @@ export default function MiniMap({
           if (mapRef.current && !mapInstance.current) {
             const options = {
               center: new window.kakao.maps.LatLng(gyeongbukCoords.lat, gyeongbukCoords.lng),
-              level: 3,
+              level: 9,
               draggable: false,
               scrollwheel: false,
               disableDoubleClickZoom: true,
@@ -76,7 +76,7 @@ export default function MiniMap({
             mapInstance.current = map;
             
             // 마커 추가
-            const marker = new window.kakao.maps.Marker({
+            new window.kakao.maps.Marker({
               position: new window.kakao.maps.LatLng(gyeongbukCoords.lat, gyeongbukCoords.lng),
               map: map
             });

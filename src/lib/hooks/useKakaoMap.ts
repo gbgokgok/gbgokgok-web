@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 
 interface MapOptions {
   center?: {
@@ -18,10 +18,10 @@ interface Marker {
 
 export default function useKakaoMap() {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<any>(null);
-  const [markers, setMarkers] = useState<any[]>([]);
+  const [map, setMap] = useState<KakaoMap | null>(null);
+  const [markers, setMarkers] = useState<KakaoMarker[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentLocationMarker, setCurrentLocationMarker] = useState<any>(null);
+  const [currentLocationMarker, setCurrentLocationMarker] = useState<KakaoMarker | null>(null);
 
   // 지도 초기화
   const initializeMap = useCallback((options: MapOptions = {}) => {
@@ -162,7 +162,7 @@ export default function useKakaoMap() {
       console.error('Failed to get current location:', error);
       throw error;
     }
-  }, [map, setCenter, currentLocationMarker]);
+  }, [map, setCenter, currentLocationMarker, getCurrentLocation]);
 
   return {
     mapRef,

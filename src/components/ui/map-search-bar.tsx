@@ -1,20 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface MapSearchBarProps {
   onSearch?: (query: string) => void;
-  onMenuClick?: () => void;
 }
 
-export default function MapSearchBar({ onSearch, onMenuClick }: MapSearchBarProps) {
+export default function MapSearchBar({ onSearch }: MapSearchBarProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSearch && searchQuery.trim()) {
       onSearch(searchQuery);
     }
+  };
+
+  const handleBackClick = () => {
+    router.back();
   };
 
   return (
@@ -25,9 +30,9 @@ export default function MapSearchBar({ onSearch, onMenuClick }: MapSearchBarProp
       >
         <button 
           type="button" 
-          onClick={onMenuClick}
+          onClick={handleBackClick}
           className="p-3 flex-shrink-0"
-          aria-label="메뉴"
+          aria-label="뒤로가기"
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -40,14 +45,14 @@ export default function MapSearchBar({ onSearch, onMenuClick }: MapSearchBarProp
             <path 
               strokeLinecap="round" 
               strokeLinejoin="round" 
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" 
+              d="M15.75 19.5L8.25 12l7.5-7.5" 
             />
           </svg>
         </button>
         
         <input
           type="text"
-          placeholder="장소, 버스, 지하철, 주소 검색"
+          placeholder="관광지, 먹거리, 숙박 검색"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="flex-grow py-3 px-2 outline-none text-sm"
