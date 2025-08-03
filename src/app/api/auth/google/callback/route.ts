@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       console.error('로그인 API 응답 오류:', loginResponse.status);
       return NextResponse.redirect(`${baseUrl}/login?error=server_error`);
     }
-
+    console.log('loginResponse', loginResponse);
     const data = await loginResponse.json();
     
     let redirectUrl;
