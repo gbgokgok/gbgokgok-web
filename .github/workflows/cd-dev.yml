@@ -11,6 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .env
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.DEV_NEXT_PUBLIC_API_URL }}" >> .env.production
+          echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID"=${{ secrets.DEV_NEXT_PUBLIC_GOOGLE_CLIENT_ID }} >> .env.production
+          echo "NEXT_PUBLIC_KAKAO_MAP_API_KEY"=${{ secrets.DEV_NEXT_PBULIC_KAKAO_MAP_API_KEY }} >> .env.production
+
       - name: Set up Node.jobs
         uses: actions/setup-node@v4
         with:
