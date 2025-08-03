@@ -13,6 +13,7 @@ jobs:
 
       - name: Create .env
         run: |
+          echo "NEXT_PUBLIC_CF_ACCESS_TOKEN"=${{ secrets.DEV_NEXT_PUBLIC_CF_ACCESS_TOKEN }} >> .env.production
           echo "NEXT_PUBLIC_API_URL=${{ secrets.DEV_NEXT_PUBLIC_API_URL }}" >> .env.production
           echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID"=${{ secrets.DEV_NEXT_PUBLIC_GOOGLE_CLIENT_ID }} >> .env.production
           echo "NEXT_PUBLIC_KAKAO_MAP_API_KEY"=${{ secrets.DEV_NEXT_PBULIC_KAKAO_MAP_API_KEY }} >> .env.production
