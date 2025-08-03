@@ -30,6 +30,8 @@ export async function GET(request: NextRequest) {
     console.log('loginResponse', loginResponse);
     if (!loginResponse.ok) {
       console.error('로그인 API 응답 오류:', loginResponse.status);
+      const rawBody = await loginResponse.text();
+      console.error('🔍 서버에서 받은 HTML 응답:\n', rawBody);
       return NextResponse.redirect(`${baseUrl}/login?error=server_error`);
     }
     
