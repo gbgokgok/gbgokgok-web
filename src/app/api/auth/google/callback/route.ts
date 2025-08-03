@@ -6,42 +6,43 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url);
     const code = url.searchParams.get('code');
     
+    // 실제 도메인을 가져오는 부분 수정
+    const host = request.headers.get('host') || request.headers.get('x-forwarded-host');
+    const protocol = request.headers.get('x-forwarded-proto') || 'https';
+    const baseUrl = `${protocol}://${host}`;
+    
     if (!code) {
-      return NextResponse.redirect(`${url.origin}/login?error=no_code`);
+      return NextResponse.redirect(`${baseUrl}/login?error=no_code`);
     }
 
     // 내부 API 라우트를 통해 로그인 처리
-    const loginResponse = await fetch(`${url.origin}/api/auth/login`, {
+    const loginResponse = await fetch(`${baseUrl}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         code,
-        redirectUri: `${url.origin}/api/auth/google/callback`,
+        redirectUri: `${baseUrl}/api/auth/google/callback`,
       }),
     });
 
     if (!loginResponse.ok) {
       console.error('로그인 API 응답 오류:', loginResponse.status);
-      return NextResponse.redirect(`${url.origin}/login?error=server_error`);
+      return NextResponse.redirect(`${baseUrl}/login?error=server_error`);
     }
 
     const data = await loginResponse.json();
     
     let redirectUrl;
     if (data.isSignupRequired) {
-      // 회원가입이 필요한 경우 회원가입 페이지로 리다이렉트
-      // 토큰을 쿠키에 저장하지 않고 URL 파라미터로만 전달
-      redirectUrl = `${url.origin}/register?token=${data.accessToken}`;
+      redirectUrl = `${baseUrl}/register?token=${data.accessToken}`;
       return NextResponse.redirect(redirectUrl);
     } else {
-      // 이미 회원인 경우 메인 페이지로 리다이렉트하고 토큰을 쿠키에 저장
-      redirectUrl = `${url.origin}/`;
+      redirectUrl = `${baseUrl}/`;
       
       const responseWithCookies = NextResponse.redirect(redirectUrl);
       
-      // 토큰을 쿠키에 저장
       responseWithCookies.cookies.set('accessToken', data.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -64,7 +65,12 @@ export async function GET(request: NextRequest) {
     }
   } catch (error) {
     console.error('Google OAuth 콜백 처리 오류:', error);
-    const url = new URL(request.url);
-    return NextResponse.redirect(`${url.origin}/login?error=unknown`);
+    
+    // 에러 발생 시에도 올바른 도메인 사용
+    const host = request.headers.get('host') || request.headers.get('x-forwarded-host');
+    const protocol = request.headers.get('x-forwarded-proto') || 'https';
+    const baseUrl = `${protocol}://${host}`;
+    
+    return NextResponse.redirect(`${baseUrl}/login?error=unknown`);
   }
 } 
