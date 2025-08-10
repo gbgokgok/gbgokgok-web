@@ -17,11 +17,10 @@ export async function GET(request: NextRequest) {
     }
 
     // 내부 API 라우트를 통해 로그인 처리
-    const loginResponse = await fetch(`https://api-staging.gbgokgok.kr/oauth/login`, {
+    const loginResponse = await fetch(`${baseUrl}/api/auth/login`, {
       method: 'POST',
       headers: {
-        'accept': 'application/json;charset=UTF-8',
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         code,
