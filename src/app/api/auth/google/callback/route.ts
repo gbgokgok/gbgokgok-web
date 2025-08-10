@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 내부 API 라우트를 통해 로그인 처리
-    const loginResponse = await fetch(`${baseUrl}/api/auth/login`, {
+    const loginResponse = await fetch(`https://api-staging.gbgokgok.kr/oauth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -30,8 +30,6 @@ export async function GET(request: NextRequest) {
     console.log('loginResponse', loginResponse);
     if (!loginResponse.ok) {
       console.error('로그인 API 응답 오류:', loginResponse.status);
-      const rawBody = await loginResponse.text();
-      console.error('🔍 서버에서 받은 HTML 응답:\n', rawBody);
       return NextResponse.redirect(`${baseUrl}/login?error=server_error`);
     }
     
