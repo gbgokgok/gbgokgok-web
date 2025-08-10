@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     const host = request.headers.get('host') || request.headers.get('x-forwarded-host');
     const protocol = request.headers.get('x-forwarded-proto') || 'https';
     const baseUrl = `${protocol}://${host}`;
+    console.log('baseUrl', baseUrl);
     
     if (!code) {
       return NextResponse.redirect(`${baseUrl}/login?error=no_code`);
@@ -19,7 +20,8 @@ export async function GET(request: NextRequest) {
     const loginResponse = await fetch(`https://api-staging.gbgokgok.kr/oauth/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'accept': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8'
       },
       body: JSON.stringify({
         code,
