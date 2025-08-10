@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 내부 API 라우트를 통해 로그인 처리
-    const loginResponse = await fetch(`${baseUrl}/api/auth/login`, {
+    const loginResponse = await fetch(`${baseUrl}/oauth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
