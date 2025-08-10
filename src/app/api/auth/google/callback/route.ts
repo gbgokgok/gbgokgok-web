@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     const host = request.headers.get('host') || request.headers.get('x-forwarded-host');
     const protocol = request.headers.get('x-forwarded-proto') || 'https';
     const baseUrl = `${protocol}://${host}`;
+    console.log('baseUrl', baseUrl);
     
     if (!code) {
       return NextResponse.redirect(`${baseUrl}/login?error=no_code`);
@@ -27,11 +28,12 @@ export async function GET(request: NextRequest) {
       }),
     });
 
+    console.log('loginResponse', loginResponse);
     if (!loginResponse.ok) {
       console.error('로그인 API 응답 오류:', loginResponse.status);
       return NextResponse.redirect(`${baseUrl}/login?error=server_error`);
     }
-
+    
     const data = await loginResponse.json();
     
     let redirectUrl;

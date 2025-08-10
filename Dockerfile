@@ -1,6 +1,7 @@
 FROM node:21-alpine AS builder
 WORKDIR /app
 COPY . .
+COPY .env.production .env.production
 
 RUN npm install
 RUN npm run build
