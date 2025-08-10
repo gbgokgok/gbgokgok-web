@@ -1,4 +1,4 @@
-# 경북곡곡
+# 경북곡곡 WEB
 
 Next.Js 15.2.x
 Tailwind css 4.1.7
