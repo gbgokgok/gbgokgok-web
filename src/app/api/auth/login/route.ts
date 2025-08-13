@@ -32,16 +32,22 @@ export async function POST(request: NextRequest) {
     // 응답 처리
     const text = await response.text();
     
+    
+    // 백엔드의 Set-Cookie 헤더 추출
+    const setCookie = response.headers.get('set-cookie');
+
     let data;
     if (text) {
       try {
         data = JSON.parse(text);
+        console.log('파싱된 데이터:', data);
       } catch (e) {
         console.error('JSON 파싱 오류:', e);
-        // JSON 파싱 실패 시 텍스트 응답 그대로 반환
+        const init: ResponseInit = { status: 500 };
+        if (setCookie) init.headers = { 'Set-Cookie': setCookie };
         return NextResponse.json(
           { error: '서버 응답을 처리할 수 없습니다.', rawResponse: text },
-          { status: 500 }
+          init
         );
       }
     } else {
@@ -53,13 +59,17 @@ export async function POST(request: NextRequest) {
     const responseData = data.data || data;
     
     if (!response.ok) {
-      return NextResponse.json(
-        data,
-        { status: response.status }
-      );
+      const init: ResponseInit = { status: response.status };
+      if (setCookie) init.headers = { 'Set-Cookie': setCookie };
+      return NextResponse.json(data, init);
     }
     
-    return NextResponse.json(responseData);
+    // 성공 시에도 Set-Cookie를 그대로 전달
+    {
+      const init: ResponseInit = {};
+      if (setCookie) init.headers = { 'Set-Cookie': setCookie };
+      return NextResponse.json(responseData, init);
+    }
   } catch (error) {
     console.error('로그인 API 오류:', error);
     return NextResponse.json(
@@ -67,4 +77,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}
