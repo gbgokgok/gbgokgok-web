@@ -8,8 +8,19 @@ export default function CourseCreatePage() {
     <div className="p-4 pb-20">
       <div className="flex items-center mb-4">
         <Link href="/course" className="mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
+        <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            strokeWidth={1.5} 
+            stroke="currentColor" 
+            className="w-6 h-6 text-gray-600"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              d="M15.75 19.5L8.25 12l7.5-7.5" 
+            />
           </svg>
         </Link>
         <h1 className="text-2xl font-bold">코스 만들기</h1>

@@ -18,38 +18,12 @@ export default function MapSearchBar({ onSearch }: MapSearchBarProps) {
     }
   };
 
-  const handleBackClick = () => {
-    router.back();
-  };
-
   return (
-    <div className="absolute top-4 left-0 right-0 z-10 px-4">
+    <div className="absolute top-15 left-0 right-0 z-10 px-4">
       <form 
         onSubmit={handleSubmit}
-        className="bg-white rounded-full shadow-md flex items-center overflow-hidden"
-      >
-        <button 
-          type="button" 
-          onClick={handleBackClick}
-          className="p-3 flex-shrink-0"
-          aria-label="뒤로가기"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            strokeWidth={1.5} 
-            stroke="currentColor" 
-            className="w-6 h-6 text-gray-600"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              d="M15.75 19.5L8.25 12l7.5-7.5" 
-            />
-          </svg>
-        </button>
-        
+        className="bg-white rounded-lg flex items-center overflow-hidden border border-gray-200"
+      >        
         <input
           type="text"
           placeholder="관광지, 먹거리, 숙박 검색"
